@@ -100,9 +100,14 @@ void loop()
         }
     }
     else if (state == Forward) {
-        if (tp.r < 0.1) { //目標が近ければ
+        if (tp.r < 0.2 && iTarget != NumTarget-1) { //目標が近ければ && 最終目標でなければ
             state = Stop;
             cout << "Forward -> Stop" << endl;
+        }
+        else if (tp.r < 0.1 && iTarget == NumTarget - 1) //目標が近い && 最終目標であれば
+        {
+            state = Stop;
+            cout << "Forward -> Stop"  << endl;
         }
         else if (abs(tp.a) > 0.2) { //目標が正面になければ
             state = Turn;
@@ -127,11 +132,11 @@ void loop()
         }
     }
     else if (state == Avoid) {
-        if (currentTime - avoidTime > 2) { //Avoidを始めてから一定時間経過していれば
+        if (currentTime - avoidTime > 2 && nearest.x >= 0.3) { //Avoidを始めてから一定時間経過していれば
             state = Turn;
             cout << "Avoid -> Turn" << endl;
         }
-        else if (nearest.x < 0.5) { //障害物が近ければ
+        else if (nearest.x < 0.3) { //障害物が近ければ
             state = Search;
             cout << "Avoid -> Search" << endl;
             if (nearest.y > 0) {  //最近接障害物の位置によってSearchの回転方向を決める．
@@ -149,7 +154,7 @@ void loop()
         vel.w = 0;
     }
     else if (state == Turn) {
-        vel.v = 0;
+        vel.v = 0.0;
         if (tp.a > 0) { //左にあれば
             vel.w = 1.0;
         }
