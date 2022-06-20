@@ -112,10 +112,10 @@ void loop()
             state = Search;
             cout << "Forward -> Search" << endl;
             if (nearest.y > 0) { //最近接障害物の位置によってSearchの回転方向を決める．
-                wSearch = -0.5;
+                wSearch = -1.0;
             }
             else {
-                wSearch = 0.5;
+                wSearch = 1.0;
             }
         }
     }
@@ -145,16 +145,16 @@ void loop()
 
     //状態に応じた指令の決定
     if (state == Forward) {
-        vel.v = 0.2;
+        vel.v = 0.3;
         vel.w = 0;
     }
     else if (state == Turn) {
         vel.v = 0;
         if (tp.a > 0) { //左にあれば
-            vel.w = 0.5;
+            vel.w = 1.0;
         }
         else { //右にあれば
-            vel.w = -0.5;
+            vel.w = -1.0;
         }
     }
     else if (state == Search) {
@@ -162,7 +162,7 @@ void loop()
         vel.w = wSearch;
     }
     else if (state == Avoid) {
-        vel.v = 0.2;
+        vel.v = 0.3;
         vel.w = 0;
     }
     else if (state == Stop) {
