@@ -127,7 +127,7 @@ void loop()
         }
     }
     else if (state == Avoid) {
-        if (currentTime - avoidTime > 4) { //Avoidを始めてから一定時間経過していれば
+        if (currentTime - avoidTime > 2) { //Avoidを始めてから一定時間経過していれば
             state = Turn;
             cout << "Avoid -> Turn" << endl;
         }
